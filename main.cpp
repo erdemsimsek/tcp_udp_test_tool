@@ -3,6 +3,8 @@
 // If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
 
+#include <iostream>
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -56,7 +58,7 @@ int main(int, char**)
 #endif
 
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1280, 720, "TCP/UDP Test Tool v1.0.0", NULL, NULL);
     if (window == NULL)
         return 1;
     glfwMakeContextCurrent(window);
@@ -111,6 +113,40 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        if (ImGui::BeginMainMenuBar())
+        {
+            if (ImGui::BeginMenu("Create"))
+            {
+                if (ImGui::MenuItem("TCP Test Block"))
+                {
+
+                }
+
+                if (ImGui::MenuItem("UDP Test Block"))
+                {
+
+                }
+                ImGui::EndMenu();
+            }
+
+            if (ImGui::BeginMenu("Help"))
+            {
+                if (ImGui::MenuItem("Version")) 
+                {
+                    std::cout << "Version is clicked \n";
+                }
+                ImGui::EndMenu();
+            }
+            ImGui::EndMainMenuBar();
+        }
+
+        // ImGui::SetWindowSize("UDP Control Panel", ImVec2(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y));
+        // ImGui::SetWindowPos("UDP Control Panel", ImVec2(0, 0));
+        // if (ImGui::Begin("UDP Control Panel", nullptr, ImGuiWindowFlags_MenuBar))
+        // {
+            
+        // }
+        // ImGui::End();
 
 
         // Rendering
