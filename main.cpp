@@ -4,6 +4,7 @@
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
 
 #include <iostream>
+#include "mainMenuBar.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -21,6 +22,12 @@
 #if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
+
+
+void mainMenuBarFileEventCB();
+void mainMenuBarEditEventCB();
+void mainMenuBarFileNewEventCB();
+void mainMenuBarFileDeleteEventCB();
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -98,6 +105,17 @@ int main(int, char**)
     // Our state
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    MainMenuBar menuBar;
+    MainMenuBar::MenuProperties menuFileProp{nullptr, mainMenuBarFileEventCB, "File", MainMenuBar::MenuType::MENU_TYPE_TITLE};
+    MainMenuBar::MenuProperties menuEditProp{nullptr, mainMenuBarEditEventCB, "Edit", MainMenuBar::MenuType::MENU_TYPE_TITLE};
+    MainMenuBar::MenuProperties menuFileNewProp{&menuFileProp, mainMenuBarFileNewEventCB, "New", MainMenuBar::MenuType::MENU_TYPE_ITEM};
+    MainMenuBar::MenuProperties menuFileEditProp{&menuFileProp, mainMenuBarFileDeleteEventCB, "Delete", MainMenuBar::MenuType::MENU_TYPE_ITEM};
+    menuBar.addMenu(&menuFileProp);
+    menuBar.addMenu(&menuEditProp);
+    menuBar.addMenu(&menuFileNewProp);
+    menuBar.addMenu(&menuFileEditProp);
+
+
     // Main loop
     while (!glfwWindowShouldClose(window))
     {
@@ -113,32 +131,36 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        if (ImGui::BeginMainMenuBar())
-        {
-            if (ImGui::BeginMenu("Create"))
-            {
-                if (ImGui::MenuItem("TCP Test Block"))
-                {
+        menuBar.execute();
 
-                }
+        // if (ImGui::BeginMainMenuBar())
+        // {
+        //     if (ImGui::BeginMenu("Create"))
+        //     {
+        //         if (ImGui::MenuItem("TCP Test Block"))
+        //         {
 
-                if (ImGui::MenuItem("UDP Test Block"))
-                {
+        //         }
 
-                }
-                ImGui::EndMenu();
-            }
+        //         if (ImGui::MenuItem("UDP Test Block"))
+        //         {
 
-            if (ImGui::BeginMenu("Help"))
-            {
-                if (ImGui::MenuItem("Version")) 
-                {
-                    std::cout << "Version is clicked \n";
-                }
-                ImGui::EndMenu();
-            }
-            ImGui::EndMainMenuBar();
-        }
+        //         }
+        //         ImGui::EndMenu();
+        //     }
+
+        //     if (ImGui::BeginMenu("Help"))
+        //     {
+        //         if (ImGui::MenuItem("Version")) 
+        //         {
+        //             std::cout << "Version is clicked \n";
+        //         }
+        //         ImGui::EndMenu();
+        //     }
+        //     ImGui::EndMainMenuBar();
+        // }
+
+        
 
         // ImGui::SetWindowSize("UDP Control Panel", ImVec2(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y));
         // ImGui::SetWindowPos("UDP Control Panel", ImVec2(0, 0));
@@ -170,4 +192,25 @@ int main(int, char**)
     glfwTerminate();
 
     return 0;
+}
+
+
+void mainMenuBarFileEventCB()
+{
+    std::cout << "mainMenuBarFileEventCB\n";
+}
+
+void mainMenuBarEditEventCB()
+{
+    std::cout << "mainMenuBarEditEventCB\n";
+}
+
+void mainMenuBarFileNewEventCB()
+{
+    std::cout << "mainMenuBarFileNewEventCB\n";
+}
+
+void mainMenuBarFileDeleteEventCB()
+{
+    std::cout << "mainMenuBarFileDeleteEventCB\n";
 }
