@@ -4,6 +4,8 @@ project(TCP_UDP_Test_Tool VERSION 1.0.0 LANGUAGES CXX)
 
 SET (CMAKE_CXX_COMPILER "/usr/bin/clang++" CACHE STRING "C++ compiler" FORCE)
 set (CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS -pthread)
+
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     message(STATUS "Building for Linux")
@@ -15,7 +17,7 @@ set(IMGUI_BACKEND_SRC_DIR "ImGUI/backends")
 include_directories("ImGUI")
 include_directories("ImGUI/backends")
 
-include_directories("GUI/header")
+include_directories("App/comms")
 
 add_executable(${CMAKE_PROJECT_NAME} 
     main.cpp

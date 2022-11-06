@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <vector>
+#include "udp_server.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -451,6 +452,9 @@ int main(int, char**)
     // Our state
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    UdpServer server(nullptr, 1500);
+    server.startListenning();
+    server.execute();
 
     // Main loop
     while (!glfwWindowShouldClose(window))
@@ -542,6 +546,8 @@ int main(int, char**)
                 ImGui::EndTabBar();
         }
         ImGui::End();
+
+        
 
         // Rendering
         ImGui::Render();
